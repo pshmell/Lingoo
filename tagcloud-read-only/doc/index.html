@@ -1,0 +1,275 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<title>TagCloud</title>
+<link rel="stylesheet" type="text/css" href="podstyle.css" /><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div class="box">
+  <h1 class="t1">TagCloud</h1>
+  <table>
+    <tr>
+      <td class="label">Description</td>
+      <td class="cell">Documentation of tagcloud.js</td>
+    </tr>
+  </table>
+</div>
+
+<div class="pod">
+<!-- INDEX START -->
+<h3 id="TOP">Index</h3>
+<ul>
+	<li><a href="#NAME">NAME</a></li>
+	<li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+	<li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+	<li><a href="#CSS">CSS</a></li>
+	<li><a href="#EFFECTORS">EFFECTORS</a><br />
+<ul>
+	<li><a href="#CountSize">CountSize</a></li>
+	<li><a href="#DateTimeColor">DateTimeColor</a></li>
+	<li><a href="#HotWord">HotWord</a></li>
+</ul>
+</li>
+	<li><a href="#AUTHOR">AUTHOR</a></li>
+	<li><a href="#LICENSE">LICENSE</a></li>
+</ul>
+<hr />
+<!-- INDEX END -->
+
+<h1 id="NAME">NAME <a href="#TOP" class="toplink"><img alt="^" src="up.gif" /></a></h1>
+
+<p>TagCloud - JavaScript TagCloud Generataor</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS <a href="#TOP" class="toplink"><img alt="^" src="up.gif" /></a></h1>
+
+<pre>  &lt;html&gt;
+  &lt;head&gt;
+  &lt;style type=&quot;text/css&quot;&gt;
+  * {
+    margin:  0;
+    padding: 0;
+  }
+  div#mytagcloud {
+    border: 1px solid #000;
+  }
+  .tagcloud-list {
+    font-size: 100%;
+    font-weight: bold;
+    font-family: Arial, sans-self;
+    padding: 2px;
+  }
+  .tagcloud-base {
+    font-size: 24px;
+    display: inline;
+  }
+  .tagcloud-anchor {
+    text-decoration: none;
+  }
+  .tagcloud-ealiest {
+    color: #ccc;
+  }
+  .tagcloud-earlier {
+    color: #99c;
+  }
+  .tagcloud-later {
+    color: #99f;
+  }
+  .tagcloud-latest {
+    color: #00f;
+  }
+  &lt;/style&gt;
+  &lt;script type=&quot;text/javascript&quot; src=&quot;tagcloud.js&quot;&gt;&lt;/script&gt;
+  &lt;script type=&quot;text/javascript&quot;&gt;
+  &lt;!--
+
+  var tc = TagCloud.create();
+
+  tc.add('perl', 40, 'http://www.perl.org', Date.parse(&quot;1998/10/20 00:00:00&quot;));
+  tc.add('ruby', 20, 'http://www.ruby-lang.org', Date.parse(&quot;2000/04/30 00:00:00&quot;));
+  tc.add('python', 50, 'http://www.python.org', Date.parse(&quot;2002/05/12 00:00:00&quot;));
+  tc.add('php', 5, 'http://www.php.net', Date.parse(&quot;2003/07/10 00:00:00&quot;));
+
+  tc.loadEffector('CountSize');
+  tc.loadEffector('DateTimeColor');
+
+  function setup() {
+    tc.setup('mytagcloud');
+  }
+
+  //--&gt;
+  &lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body onload=&quot;setup();&quot;&gt;
+  &lt;div id=&quot;mytagcloud&quot;&gt;&lt;/div&gt;
+  &lt;/body&gt;
+  &lt;/html&gt;
+
+</pre><h1 id="DESCRIPTION">DESCRIPTION <a href="#TOP" class="toplink"><img alt="^" src="up.gif" /></a></h1>
+
+<p>This library allows you to generate TagCloud easily.</p>
+
+<p>At first, create container.</p>
+
+<pre>  var tc = TagCloud.create();
+
+</pre><p>Next, add data. </p>
+
+<p>First argument is a name of tag.
+Second is a count (exp: how many times user use the tag, or etc...).
+Third is a URL that attached the tag when it displayed on HTML. 
+Forth is date that is the last time user use the tag.
+This is needed only when you want to use 'DateTimeColor Effector'.
+You should pass the date as JavaScript Date Object. Date.parse and Date.UTC
+are nice. See JavaScript reference manuals in detail.</p>
+
+<pre>  tc.add('perl', 40, 'http://www.perl.org', Date.parse(&quot;1998/10/20 00:00:00&quot;));
+  tc.add('ruby', 20, 'http://www.ruby-lang.org', Date.parse(&quot;2000/04/30 00:00:00&quot;));
+  tc.add('python', 50, 'http://www.python.org', Date.parse(&quot;2002/05/12 00:00:00&quot;));
+  tc.add('php', 5, 'http://www.php.net', Date.parse(&quot;2003/07/10 00:00:00&quot;));
+
+</pre><p>Load Effectors, your favorite choise.
+Each Effectors are described later.</p>
+
+<pre>  tc.loadEffector('CountSize');
+  tc.loadEffector('DateTimeColor');
+
+</pre><p>Finally, all you have to do is to execute 'setup' method.
+Pass the id of HTML element what you want to generate tagcloud into.  </p>
+
+<pre>  tc.setup('elementId');
+
+</pre><p>However, be attention to the sequence of HTML rendering.
+You should execute this method after browser generates
+all HTML DOM. I'll show you some solutions as follows,</p>
+
+<pre>  ...
+  function tagcloud_setup() {
+    tc.setup('elementId');
+  }
+  &lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body onload=&quot;tagcloud_setup()&quot;&gt;
+  &lt;div id=&quot;elementId&quot;&gt;&lt;/div&gt;
+  ...
+
+</pre><p>or handle event with addEventListener or attachEvent</p>
+
+<p>If you use Prototype.js, It'll be further simple code.</p>
+
+<pre>  Event.observe(window, 'load' function(){
+    tc.setup('elementId');
+  });
+
+</pre><h1 id="CSS">CSS <a href="#TOP" class="toplink"><img alt="^" src="up.gif" /></a></h1>
+
+<p>The example HTML that this libary finally generates will be like follow format.</p>
+
+<pre>  &lt;div id=&quot;mytagcloud&quot;&gt;
+
+  &lt;ul class=&quot;tagcloud-list&quot;&gt;
+    &lt;li class=&quot;tagcloud-base&quot;&gt;
+      &lt;a href=&quot;TagURL1&quot; class=&quot;tagcloud-anchor&quot;&gt;TagName1&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;tagcloud-base&quot;&gt;
+      &lt;a href=&quot;TagURL2&quot; class=&quot;tagcloud-anchor&quot;&gt;TagName2&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;tagcloud-base&quot;&gt;
+      &lt;a href=&quot;TagURL3&quot; class=&quot;tagcloud-anchor&quot;&gt;TagName3&lt;/a&gt;
+    &lt;/li&gt;
+    ...
+  &lt;/ul&gt;
+
+  &lt;/div&gt;
+
+</pre><p>There are three basic css classes.
+You have to define them beforehand.</p>
+
+<dl>
+	<dt>tagcloud-list</dt>
+	<dt>tagcloud-base</dt>
+	<dt>tagcloud-anchor</dt>
+</dl>
+<h1 id="EFFECTORS">EFFECTORS <a href="#TOP" class="toplink"><img alt="^" src="up.gif" /></a></h1>
+
+<p>You can modify the tags' style with Effectors.</p>
+
+<p>Now three effectors are implemented.</p>
+
+<h2 id="CountSize">CountSize</h2>
+
+<pre>  var effector = tc.loadEffector('CountSize');
+  effector.base(30);
+  effector.range(10);
+
+  // chain style
+  tc.loadEffector('CountSize').base(30).range(10);
+
+</pre><dl>
+	<dt>base</dt>
+		<dd><p>Base FontSize. By default, 24.</p></dd>
+	<dt>range</dt>
+		<dd><p>Range between Maximum FontSize and Minimum FontSize.
+By default, 12.</p></dd>
+	<dt>suffix</dt>
+		<dd><p>Suffix of Size Format.
+By default, 'px'.</p></dd>
+</dl>
+<h2 id="DateTimeColor">DateTimeColor</h2>
+
+<pre>  tc.loadEffector('DateTimeColor');
+
+</pre><p>And this effector requires four css classes.</p>
+
+<dl>
+	<dt>tagcloud-ealiest</dt>
+	<dt>tagcloud-ealier</dt>
+	<dt>tagcloud-later</dt>
+	<dt>tagcloud-latest</dt>
+</dl>
+<p>So, you should write these classes on your css.
+Here is an example.</p>
+
+<pre>  .tagcloud-ealiest {
+    color: #ccc;
+  }
+  .tagcloud-earlier {
+    color: #99c;
+  }
+  .tagcloud-later {
+    color: #99f;
+  }
+  .tagcloud-latest {
+    color: #00f;
+  }
+
+</pre><p>With this example, Older tag's color becomes lighten, and
+Newer one becomes deepen.</p>
+
+<h2 id="HotWord">HotWord</h2>
+
+<p>This effector change style of tag it's name
+matches the indicated words.</p>
+
+<pre>  var effector = tc.loadEffector('HotWord');
+  effector.words('word1', 'word2');
+
+  // chain style
+  tc.loadEffector('HotWord').words('word1', 'word2');
+
+</pre><p>This effector requires css class named tagcloud-hotword.</p>
+
+<pre>  .tagcloud-hotword {
+    color: #f90;
+  }
+
+</pre><h1 id="AUTHOR">AUTHOR <a href="#TOP" class="toplink"><img alt="^" src="up.gif" /></a></h1>
+
+<p>Lyo Kato, <code>lyo.kato@gmail.com</code></p>
+
+<h1 id="LICENSE">LICENSE <a href="#TOP" class="toplink"><img alt="^" src="up.gif" /></a></h1>
+
+<p>MIT License.</p>
+
+
+</div><div class="footer">generated by <a href="http://search.cpan.org/perldoc?Pod%3A%3AProjectDocs">Pod::ProjectDocs</a></div></body>
+</html>

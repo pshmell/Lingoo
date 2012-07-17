@@ -1,0 +1,257 @@
+=pod
+
+=head1 NAME
+
+TagCloud - JavaScript TagCloud Generataor
+
+=head1 SYNOPSIS
+
+  <html>
+  <head>
+  <style type="text/css">
+  * {
+    margin:  0;
+    padding: 0;
+  }
+  div#mytagcloud {
+    border: 1px solid #000;
+  }
+  .tagcloud-list {
+    font-size: 100%;
+    font-weight: bold;
+    font-family: Arial, sans-self;
+    padding: 2px;
+  }
+  .tagcloud-base {
+    font-size: 24px;
+    display: inline;
+  }
+  .tagcloud-anchor {
+    text-decoration: none;
+  }
+  .tagcloud-ealiest {
+    color: #ccc;
+  }
+  .tagcloud-earlier {
+    color: #99c;
+  }
+  .tagcloud-later {
+    color: #99f;
+  }
+  .tagcloud-latest {
+    color: #00f;
+  }
+  </style>
+  <script type="text/javascript" src="tagcloud.js"></script>
+  <script type="text/javascript">
+  <!--
+
+  var tc = TagCloud.create();
+
+  tc.add('perl', 40, 'http://www.perl.org', Date.parse("1998/10/20 00:00:00"));
+  tc.add('ruby', 20, 'http://www.ruby-lang.org', Date.parse("2000/04/30 00:00:00"));
+  tc.add('python', 50, 'http://www.python.org', Date.parse("2002/05/12 00:00:00"));
+  tc.add('php', 5, 'http://www.php.net', Date.parse("2003/07/10 00:00:00"));
+
+  tc.loadEffector('CountSize');
+  tc.loadEffector('DateTimeColor');
+
+  function setup() {
+    tc.setup('mytagcloud');
+  }
+
+  //-->
+  </script>
+  </head>
+  <body onload="setup();">
+  <div id="mytagcloud"></div>
+  </body>
+  </html>
+
+=head1 DESCRIPTION
+
+This library allows you to generate TagCloud easily.
+
+At first, create container.
+
+  var tc = TagCloud.create();
+
+Next, add data. 
+
+First argument is a name of tag.
+Second is a count (exp: how many times user use the tag, or etc...).
+Third is a URL that attached the tag when it displayed on HTML. 
+Forth is date that is the last time user use the tag.
+This is needed only when you want to use 'DateTimeColor Effector'.
+You should pass the date as JavaScript Date Object. Date.parse and Date.UTC
+are nice. See JavaScript reference manuals in detail.
+
+  tc.add('perl', 40, 'http://www.perl.org', Date.parse("1998/10/20 00:00:00"));
+  tc.add('ruby', 20, 'http://www.ruby-lang.org', Date.parse("2000/04/30 00:00:00"));
+  tc.add('python', 50, 'http://www.python.org', Date.parse("2002/05/12 00:00:00"));
+  tc.add('php', 5, 'http://www.php.net', Date.parse("2003/07/10 00:00:00"));
+
+Load Effectors, your favorite choise.
+Each Effectors are described later.
+
+  tc.loadEffector('CountSize');
+  tc.loadEffector('DateTimeColor');
+
+Finally, all you have to do is to execute 'setup' method.
+Pass the id of HTML element where you want to generate tagcloud into.  
+
+  tc.setup('elementId');
+
+However, be attention to the sequence of HTML rendering.
+You should execute this method after browser generates
+all HTML DOM. I'll show you some solutions as follows,
+
+  ...
+  function tagcloud_setup() {
+    tc.setup('elementId');
+  }
+  </script>
+  </head>
+  <body onload="tagcloud_setup()">
+  <div id="elementId"></div>
+  ...
+
+or handle event with addEventListener or attachEvent
+
+If you use Prototype.js, It'll be further simple.
+
+  Event.observe(window, 'load' function(){
+    tc.setup('elementId');
+  });
+
+=head1 CSS
+
+The example HTML that this libary finally generates will be like follow format.
+
+  <div id="mytagcloud">
+
+  <ul class="tagcloud-list">
+    <li class="tagcloud-base">
+      <a href="TagURL1" class="tagcloud-anchor">TagName1</a>
+    </li>
+    <li class="tagcloud-base">
+      <a href="TagURL2" class="tagcloud-anchor">TagName2</a>
+    </li>
+    <li class="tagcloud-base">
+      <a href="TagURL3" class="tagcloud-anchor">TagName3</a>
+    </li>
+    ...
+  </ul>
+
+  </div>
+
+There are three basic css classes.
+You have to define them beforehand.
+
+=over 4
+
+=item tagcloud-list
+
+=item tagcloud-base
+
+=item tagcloud-anchor
+
+=back
+
+=head1 EFFECTORS
+
+You can modify the tags' style with Effectors.
+
+Now three effectors are implemented.
+
+=head2 CountSize
+
+  var effector = tc.loadEffector('CountSize');
+  effector.base(30);
+  effector.range(10);
+
+  // chain style
+  tc.loadEffector('CountSize').base(30).range(10);
+
+=over 4
+
+=item base
+
+Base FontSize. By default, 24.
+
+=item range
+
+Range between Maximum FontSize and Minimum FontSize.
+By default, 12.
+
+=item suffix
+
+Suffix of Size Format.
+By default, 'px'.
+
+=back
+
+=head2 DateTimeColor
+
+  tc.loadEffector('DateTimeColor');
+
+And this effector requires four css classes.
+
+=over 4
+
+=item tagcloud-ealiest
+
+=item tagcloud-ealier
+
+=item tagcloud-later
+
+=item tagcloud-latest
+
+=back
+
+So, you should write these classes on your css.
+Here is an example.
+
+  .tagcloud-ealiest {
+    color: #ccc;
+  }
+  .tagcloud-earlier {
+    color: #99c;
+  }
+  .tagcloud-later {
+    color: #99f;
+  }
+  .tagcloud-latest {
+    color: #00f;
+  }
+
+With this example, Older tag's color becomes lighten, and
+Newer one becomes deepen.
+
+=head2 HotWord
+
+This effector changes style of tag it's name
+matches the indicated words.
+
+  var effector = tc.loadEffector('HotWord');
+  effector.words('word1', 'word2');
+
+  // chain style
+  tc.loadEffector('HotWord').words('word1', 'word2');
+
+This effector requires css class named tagcloud-hotword.
+
+  .tagcloud-hotword {
+    color: #f90;
+  }
+
+=head1 AUTHOR
+
+Lyo Kato, C<lyo.kato@gmail.com>
+
+=head1 LICENSE
+
+MIT License.
+
+=cut
+

@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <script type="text/javascript" src="lib/JSAN.js"></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+    var jsan = new JSAN('lib');
+    jsan.use('Test.Harness.Browser');
+    var browser = new Test.Harness.Browser()
+    browser.runTests(
+      'load.html',
+      'load_container.html',
+      'load_tag.html',
+      'load_calculator.html',
+      'load_effector.html',
+      'load_effector_countsize.html',
+      'load_effector_datetimecolor.html',
+      'load_effector_hotword.html'
+    );
+    </script>
+  </body>
+</html>

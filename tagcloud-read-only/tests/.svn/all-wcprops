@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 27
+/svn/!svn/ver/2/trunk/tests
+END
+load_effector.html
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/2/trunk/tests/load_effector.html
+END
+load_effector_countsize.html
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/2/trunk/tests/load_effector_countsize.html
+END
+load.html
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/2/trunk/tests/load.html
+END
+load_container.html
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/2/trunk/tests/load_container.html
+END
+load_effector_hotword.html
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/2/trunk/tests/load_effector_hotword.html
+END
+load_effector_datetimecolor.html
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/2/trunk/tests/load_effector_datetimecolor.html
+END
+index.html
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/2/trunk/tests/index.html
+END
+load_calculator.html
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/2/trunk/tests/load_calculator.html
+END
+load_tag.html
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/2/trunk/tests/load_tag.html
+END

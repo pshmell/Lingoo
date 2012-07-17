@@ -1,0 +1,14 @@
+<html>
+  <head>
+    <script type="text/javascript" src="lib/JSAN.js"></script>
+    <script type="text/javascript" src="../lib/tagcloud.js"></script>
+  </head>
+  <body>
+    <pre id="test"><script>
+    var jsan = new JSAN('lib', '../lib');
+    jsan.use('Test.More');
+    plan({ tests: 1 });
+    isnt(typeof TagCloud, 'undefined', 'TagCloud defined.');
+    </script></pre>
+  </body>
+</html>

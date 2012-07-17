@@ -1,0 +1,28 @@
+body {
+    margin: 0px auto;
+    width: 75%;
+    background-color: #dfdfdf;
+}
+
+#content {
+    margin-top: 30px;
+    padding: 10px;
+    width: 100%;
+    background-color: #fff;
+    background-image: url('/media/logo.png');
+    background-position: right top;
+    background-repeat: no-repeat;
+    font-family: helvetica;
+    border-radius: 10px 10px;
+
+}
+
+#footer {
+    margin: 0px auto;
+    text-align: center;
+    font-family: helvetica;
+}
+
+#footer p {
+    font-size: 85%;
+}

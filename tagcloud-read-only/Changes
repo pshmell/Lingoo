@@ -1,0 +1,14 @@
+
+1.1.2 - Mar 6 2007
+        fixed some bugs on CountSize effector.
+
+1.1.1 - Nov 14 2006
+        More nice examples.
+        Little bit fixed documentation.
+
+1.1.0 - Nov 10 2006
+        Removed dependency on Protptype.js.
+        CSS-ClassName based style control.
+
+1.0.0 - Jun 20 2005
+        Original Version.
